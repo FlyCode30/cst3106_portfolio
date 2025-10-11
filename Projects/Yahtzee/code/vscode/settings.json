@@ -1,0 +1,25 @@
+{
+  "liveServer.settings.port": 5501,
+
+  "liveSassCompile.settings.formats": [
+    {
+      "format": "expanded",
+      "extensionName": ".css",
+      "savePath": "/Projects/Yahtzee/code/assets/css"
+    },
+    {
+      "format": "compressed",
+      "extensionName": ".min.css",
+      "savePath": "/Projects/Yahtzee/code/assets/css"
+    }
+  ],
+
+  "liveSassCompile.settings.generateMap": true,
+  
+     // set true if you want .map files
+  "liveSassCompile.settings.excludeList": [
+    "**/node_modules/**",
+    "**/.vscode/**",
+    "assets/scss/**"        // <- exclude the old/global SCSS tree that was generating wrong CSS
+  ]
+}

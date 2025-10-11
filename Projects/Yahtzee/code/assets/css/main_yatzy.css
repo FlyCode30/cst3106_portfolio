@@ -1,3 +1,4 @@
+/* use this line of code to engage sass watch */
 /* play area */
 body {
   display: grid;
@@ -73,19 +74,16 @@ body {
 }
 
 .scoreTableContainer {
-  margin-top: 1.5rem;
-  max-height: 100%;
   background-color: white;
 } 
 /* score area */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(21, 1fr);
-  gap: 5px;
+  gap: 12px;
   align-items: center;
   width: 100%;
-  background-color: white;
+  background-color: rgb(245, 245, 245);
 }
 
 .form-grid label {
@@ -96,7 +94,9 @@ body {
 .header-score {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin-top: 3rem;
+  margin-top: 1rem;
+  align-items: center;
+  min-height: 80px;
 }
 
 .totalScoreCont h3 {
@@ -150,4 +150,6 @@ body {
 
 .newGame {
   text-align: center;
-} /*# sourceMappingURL=main_yatzy.css.map */
+} 
+
+/*# sourceMappingURL=main_yatzy.css.map */
