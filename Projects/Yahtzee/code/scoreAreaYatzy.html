@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Playing area</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="main_yatzy.css">
+    <script type= "module" src="./scriptGame.js" defer></script>
+</head>
+
+<body class="play-area-container">
+    <header class="header-score">
+        <div>
+            <button class="newGame">Save Game</button>
+        </div>
+        <div>
+            <h1 class="title">Scoreboard</h1>
+        </div>
+        <div class="totalScoreCont">
+            <h3 class="total-score">Current Total: <span id="current-total-display">0</span></h3>
+        </div>
+    </header>
+    <main>
+        <form class="form-grid">
+            <label for="upperSec-header" class="game-header">Upper Section</label>
+            <label class="game-header">Current Game</label>
+            <label class="game-header"><button id="backButton1"></button><span>History</span><button id="backButton2">></button></label>
+            <label class="scoreCategory">Aces</label>
+            <input type="currentGame" value="" id="g1-1" name="g1" placeholder="">
+            <input type="loadScores" id="load-1" name="" placeholder="">
+            <label class="scoreCategory">Twos</label>
+            <input type="currentGame" value="" id="g1-2" name="g1" placeholder="">
+            <input type="loadScores" id="load-2" name="">
+            <label class="scoreCategory">Three</label>
+            <input type="currentGame" value="" id="g1-3" name="g1" placeholder="">
+            <input type="loadScores" id="load-3" name="">
+            <label class="scoreCategory">Fours</label>
+            <input type="currentGame" value="" id="g1-4" name="g1" placeholder="">
+            <input type="loadScores" id="load-4" name="">
+            <label class="scoreCategory">Fives</label>
+            <input type="currentGame" value="" id="g1-5" name="g1" placeholder="">
+            <input type="loadScores" id="load-5" name="">
+            <label class="scoreCategory">Sixes</label>
+            <input type="currentGame" value="" id="g1-6" name="g1" placeholder="">
+            <input type="loadScores" id="load-6" name="">
+            <label class="scoreSubTotal">Sub-Total</label>
+            <input type="currentGame" id="subTot-up-g1" name="g1" placeholder="">
+            <input type="loadScores" id="load-subTotTop" name="" placeholder="">
+            <label class="scoreSubTotal">Bonus</label>
+            <input type="currentGame" id="bonus-up-g1" name="g1" placeholder="">
+            <input type="loadScores" id="load-bonTop" name="" placeholder="">
+            <label class="scoreTotal">Total Upper Section</label>
+            <input type="currentGame" id="tot-up-g1-1" name="g1" placeholder="">
+            <input type="loadScores" id="load-totTop-1" name="" placeholder="">
+            <label class="game-header">Lower Section</label>
+            <div></div>
+            <div></div>
+            <label class="scoreCategory">3 of a Kind</label>    
+            <input type="currentGame" id="g1-3k" name="g1" placeholder="">
+            <input type="loadScores" id="load-3k" name="" placeholder="">
+            <label class="scoreCategory">4 of a Kind</label>
+            <input type="currentGame" id="g1-4k" name="g1" placeholder="">
+            <input type="loadScores" id="load-4k" name="">
+            <label class="scoreCategory">Full House</label>
+            <input type="currentGame" id="g1-fh" name="g1" placeholder="">
+            <input type="loadScores" id="load-fh" name="">
+            <label class="scoreCategory">Sm. Straight</label>
+            <input type="currentGame" id="g1-ss" name="g1" placeholder="">
+            <input type="loadScores" id="load-ss" name="">
+            <label class="scoreCategory">Lg. Straight</label>
+            <input type="currentGame" id="g1-ls" name="g1" placeholder="">
+            <input type="loadScores" id="load-ls" name="">
+            <label class="scoreCategory">Yahtzee</label>
+            <input type="currentGame" id="g1-yah" name="g1" placeholder="">
+            <input type="loadScores" id="load-yah" name="">
+            <label class="scoreCategory">Chance</label>
+            <input type="currentGame" id="g1-chance" name="g1" placeholder="">
+            <input type="loadScores" id="load-cha" name="">
+            <label class="scoreTotal">Total Lower Section</label>
+            <input type="currentGame" id="tot-low-g1" name="g1" placeholder="">
+            <input type="loadScores" id="load-totBot" name="">
+            <label class="scoreTotal">Total Upper Section</label>
+            <input type="currentGame" id="tot-up-g1-2" name="g1" placeholder="">
+            <input type="loadScores" id="load-totTop-2" name="">
+            <label class="grandTotal">GRAND TOTAL</label>
+            <input type="currentGame" id="tot-game1" name="g1" placeholder="">
+            <input type="loadScores" id="load-tot" name="">
+        </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

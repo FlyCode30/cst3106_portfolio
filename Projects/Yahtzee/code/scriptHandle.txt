@@ -1,0 +1,21 @@
+export function getArrayCounter
+
+
+function getCountTotalArray() {
+
+    for (let i = 0; i < fullRoll.length; i++) {
+        if (fullRoll[i] === 1) {
+            countTotal[0] += 1;
+        } else if (fullRoll[i] === 2) {
+            countTotal[1] += 1;
+        } else if (fullRoll[i] === 3) {
+            countTotal[2] += 1;
+        } else if (fullRoll[i] === 4) {
+            countTotal[3] += 1;
+        } else if (fullRoll[i] === 5) {
+            countTotal[4] += 1;
+        } else if (fullRoll[i] === 6) {
+            countTotal[5] += 1;
+        }
+    }
+}

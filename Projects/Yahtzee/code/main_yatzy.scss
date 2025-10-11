@@ -1,0 +1,160 @@
+/* play area */
+
+body {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  place-items: center;
+  background-color: black;
+}
+
+.header-main {
+  display: flex;
+  max-width: 960px;
+  width: 100%;
+  margin-top: 40px;
+  justify-content: space-evenly;
+}
+
+.title {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.total-score {
+  text-align: right;
+  font-style: italic;
+}
+
+.total-area {
+  display: grid;
+  max-width: 960px;
+  width: 100%;
+  border: 2px solid black;
+  padding: 1rem;
+}
+
+.playAreaContainer {
+  display: grid;
+  gap: 1rem;
+  background-color: darkseagreen;
+}
+
+.currentScore {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border: 4px solid black;
+  padding: 1rem 0;
+  background: bisque;
+}
+
+.currentRoll {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin-top: 1rem;
+}
+
+.score1 img, .score2 img, .score3 img, .score4 img, .score5 img, .roll1 img, .roll2 img, .roll3 img, .roll4 img, .roll5 img {
+  width: 50%;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+  margin-left: 25%;
+}
+
+.buttonDiv {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.newRoll, .reRoll, .score {
+  font-size: 1.25rem;
+}
+
+.scoreTableContainer {
+  margin-top: 1.5rem;
+  max-height: 100%;
+  background-color: white;
+}/*# sourceMappingURL=playAreaStylesheet.css.map */
+
+/* score area */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(21, 1fr);
+  gap: 5px;
+  align-items: center;
+  width: 100%;
+  background-color: white;
+}
+
+.form-grid label {
+  text-align: center;
+  border-bottom: 2px solid black;
+}
+
+.header-score {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 3rem;
+}
+
+.totalScoreCont h3 {
+  text-align: center;
+}
+
+.total-score {
+  
+}
+
+.game-header {
+  margin-top: 1.25rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#backButton1 {
+  margin-right: 2rem;
+}
+
+#backButton2 {
+  margin-left: 2rem;
+}
+
+.header-score div {
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+.scoreCategory {
+  font-size: 1.5rem;
+}
+
+.scoreSubTotal {
+  font-size: 1.25rem;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.scoreTotal {
+  font-size: 1.25rem;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.grandTotal {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.inputValues {
+  font-weight: bold;
+  text-align: center;
+}
+
+.newGame {
+  text-align: center;
+}/*# sourceMappingURL=scoreAreaStylesheet.css.map */

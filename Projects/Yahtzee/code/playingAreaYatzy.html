@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playing area</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="main_yatzy.css">
+    <script type= "module" src="./scriptGame.js" defer></script>
+</head>
+
+<body class="body">
+    <!-- <header class="header-main">
+        <div>
+            <h1 class="title">Yatzy</h1>
+        </div>
+       
+
+    </header> -->
+    <main>
+        <div class="total-area">
+            <div id="playArea" class="playAreaContainer">
+                <div id="currentScoreID" class="currentScore">
+                    <div id="diceScore1" class="score1"><img id="choice1" src="images/side0.png" alt="Dice 1"></div>
+                    <div id="diceScore2" class="score2"><img id="choice2" src="images/side0.png" alt="Dice 2"></div>
+                    <div id="diceScore3" class="score3"><img id="choice3" src="images/side0.png" alt="Dice 3"></div>
+                    <div id="diceScore4" class="score4"><img id="choice4" src="images/side0.png" alt="Dice 4"></div>
+                    <div id="diceScore5" class="score5"><img id="choice5" src="images/side0.png" alt="Dice 5"></div>
+                </div>
+                <div id="currentRollID" class="currentRoll">
+                    <div id="diceRoll1" class="roll1"><img id="dice1" src="images/side1.png" alt="Dice 1"></div>
+                    <div id="diceRoll2" class="roll2"><img id="dice2" src="images/side2.png" alt="Dice 2"></div>
+                    <div id="diceRoll3" class="roll3"><img id="dice3" src="images/side3.png" alt="Dice 3"></div>
+                    <div id="diceRoll4" class="roll4"><img id="dice4" src="images/side4.png" alt="Dice 4"></div>
+                    <div id="diceRoll5" class="roll5"><img id="dice5" src="images/side5.png" alt="Dice 5"></div>
+                </div>
+                <div class="buttonDiv">
+                    <div class="newRoll"><button id="newRoll" type="button">New Game</button></div>
+                    <div class="reRoll"><button id="reRoll" type="button">Roll Again</button></div>
+                    <div class="score"><button id="score" type="button">Score</button></div>
+                </div>
+            </div>
+            <div>
+                <div id="scoreTable" class="scoreTableContainer">
+                </div>
+
+            </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
