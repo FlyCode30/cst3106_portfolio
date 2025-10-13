@@ -53,7 +53,6 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="resume.html">Resume</a></li>
-          <li><a href="services.html">Services</a></li>
           <li><a href="portfolio.html">Portfolio</a></li>
           <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
@@ -111,7 +110,13 @@
 
       <div class="container">
 
-      <iframe id="project-frame" style="width:100%; min-height:900px; border:0;" title="Project"></iframe>
+      <iframe id="project-frame" 
+              loading = "lazy"
+              referrerpolicy="no-referrer"
+              title="Project viewer"
+              frameborder="0"
+              allowfullscreen
+              style="width:100%; min-height:900px; border:0;" ></iframe>
 
       </div>
     </section>
@@ -140,7 +145,8 @@
 
   (function () {
     const routes = {
-      yahtzee: { title: 'Yahtzee Game', src: 'Projects/Yahtzee/code/playingAreaYatzy.html' }
+      yahtzee: { title: 'Yahtzee Game', src: 'Projects/Yahtzee/code/playingAreaYatzy.html' },
+      managerDashboard: { title: 'Managers Dashboard', src: "https://1drv.ms/x/c/8d6f6fc8f269edf4/IQQ1YM5SWlORTJFU-yLrUX_1AVY7zJSQk06u5wqwer3Gd3c" }
     };
     const key   = new URLSearchParams(location.search).get('p') || 'yatzy';
     const cfg   = routes[key];
