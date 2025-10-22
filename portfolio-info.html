@@ -57,22 +57,13 @@
           <li><a href="about.html">About</a></li>
           <li><a href="resume.html">Resume</a></li>
           <li><a href="portfolio.html">Portfolio</a></li>
-          <li class="dropdown"><a href="#"><span>Project Files</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
+          <li class="dropdown">
+            <a href="#">
+              <span>Project Files</span>
+              <i class="bi bi-chevron-down toggle-dropdown"></i>
+            </a>
+            <!-- This UL will be populated by your JS -->
+             <ul id="project-assets-menu"></ul>
           </li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -145,48 +136,105 @@
     </div>
   </footer>
 
-  <script>
-  (async function () {
+<script>
+  function buildMenu(items, parentUl, frame, projectKey) {
+    if (!Array.isArray(items)) {
+      console.warn("buildMenu expected as array, got: ", items);
+      return;
+    }
+    
+    items.forEach(item => {
+      const li = document.createElement('li');
 
+      if (Array.isArray(item.children)) {
+        li.classList.add('dropdown');
+        const a = document.createElement('a');
+        a.href = "#";
+        a.innerHTML = `<span>${item.label}</span> <i class="bi bi-chevron-down toggle-dropdown"></i>`;
+        const subUl = document.createElement("ul");
+        buildMenu(item.children, subUl, frame, projectKey);
+        li.appendChild(a);
+        li.appendChild(subUl);
+      } else {
+        const a = document.createElement("a");
+        a.href = "#";
+        a.textContent = item.label;
+
+        a.addEventListener("click", ev => {
+          ev.preventDefault();
+          if (item.embed === "newtab") {
+            window.open(item.src, '_blank', 'noopener');
+          } else if (frame) {
+            frame.src = item.src;
+          }
+          
+          const url = new URL(location.href);
+          url.searchParams.set ("p", projectKey);
+          url.searchParams.set("asset", encodeURIComponent(item.label));
+          history.replaceState(null,"", url);
+          });
+
+          li.appendChild(a);
+        }
+        
+        parentUl.appendChild(li);
+      });
+  }
+</script>
+
+<script>
+  (async function () {
     const routes = {
-      yahtzee: { 
-        title: 'Yahtzee Game', 
-        src: 'Projects/Yahtzee/code/playingAreaYatzy.html',
-        summarySrc: 'Projects/Yahtzee/code/yahtzeeSummary.md'
-      },
-      managerDashboard: { 
-        title: 'Managers Dashboard', 
-        src: "https://1drv.ms/x/c/8d6f6fc8f269edf4/IQQ1YM5SWlORTJFU-yLrUX_1AVY7zJSQk06u5wqwer3Gd3c",
-        summarySrc: '' 
-      }
+      yahtzee: {manifest: "Projects/assets/json/projectsManifest.json" },
+      managerDashboard: {manifest: "Projects/assets/json/projectsManifest.json"}
     };
 
-    const key   = new URLSearchParams(location.search).get('p') || 'yahtzee';
-    const cfg   = routes[key];
-  
-    if (!cfg) return;
+    const params = new URLSearchParams(location.search);
+    const key = params.get('p' || 'yahtzee');
+    const route = routes[key];
+    if (!route) return;
 
-    const titleEl = document.querySelector('.page-title h1');
-    if (titleEl) titleEl.textContent = cfg.title;
+    const titleEl = document.querySelector(".page-title h1");
+    const frame = document.getElementById("project-frame");
+    const sumEl = document.getElementById("project-summary");
+    const menuEl = document.getElementById("project-assets-menu");
 
-    const frame = document.getElementById('project-frame');
-    if(frame) frame.src = cfg.src; // only set the iframe src; don't touch other containers
+    // load manifest
+    let manifest;
+    try {
+      const resp = await fetch(route.manifest);
+      manifest = await resp.json();
+    } catch (e) {
+      console.error("Manifest load failed", e);
+      return;
+    }
 
-    const sumEl = document.getElementById('project-summary');
-    if (sumEl) {
-      if (cfg.summarySrc) {
-        try {
-          const resp = await fetch(cfg.summarySrc);
-          sumEl.innerHTML = await resp.text();
-        } catch {
-          sumEl.innerHTML = '(summary not available)';
-        }
-      } else {
-        sumEl.innerHTML = '';
+    // load title
+    if (titleEl && manifest.title) titleEl.textContent = manifest.title;
+
+    // load summary
+    if (sumEl && manifest.summarySrc) {
+      try {
+        const resp = await fetch(manifest.summarySrc);
+        const text = await resp.text();
+        sumEl.innerHTML = text; // use marked.parse(text) if you switch to Markdown rendering
+      } catch (e) {
+        sumEl.textContent = "(summary not available)";
       }
     }
-  })();
-  </script>
+
+    // default ifram
+    if (frame && manifest.defaultSrc) frame.src = manifest.defaultSrc;
+
+    // build dropdown list
+    
+    if (menuEl && Array.isArray(manifest.assets)) {
+      menuEl.innerHTML = '';  // clear placeholder items 
+      buildMenu(manifest.assets, menuEl, frame, key);
+    }
+
+  }) ();
+</script>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
