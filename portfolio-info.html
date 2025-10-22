@@ -90,10 +90,9 @@
 
       <nav class="breadcrumbs">
         <div class="container">
-          <ol>
+          <ol id="breadcrumb-list">
             <li><a href="index.html">Home</a></li>
             <li class="current"><a href="portfolio.html">Portfolio Home</a></li>
-            <li></li>
           </ol>
         </div>
       </nav>
@@ -136,8 +135,9 @@
     </div>
   </footer>
 
+<!-- builds menu for dropdowns and secondary nav -->
 <script>
-  function buildMenu(items, parentUl, frame, projectKey) {
+  function buildMenu(items, parentUl, frame, projectKey, projectTitle) {
     if (!Array.isArray(items)) {
       console.warn("buildMenu expected as array, got: ", items);
       return;
@@ -152,7 +152,7 @@
         a.href = "#";
         a.innerHTML = `<span>${item.label}</span> <i class="bi bi-chevron-down toggle-dropdown"></i>`;
         const subUl = document.createElement("ul");
-        buildMenu(item.children, subUl, frame, projectKey);
+        buildMenu(item.children, subUl, frame, projectKey, projectTitle);
         li.appendChild(a);
         li.appendChild(subUl);
       } else {
@@ -168,6 +168,8 @@
             frame.src = item.src;
           }
           
+          updateBreadcrumb(projectTitle, item.label);
+
           const url = new URL(location.href);
           url.searchParams.set ("p", projectKey);
           url.searchParams.set("asset", encodeURIComponent(item.label));
@@ -190,16 +192,10 @@
     };
 
     const params = new URLSearchParams(location.search);
-    const key = params.get('p' || 'yahtzee');
+    const key = params.get('p') || 'yahtzee';
     const route = routes[key];
     if (!route) return;
 
-    const titleEl = document.querySelector(".page-title h1");
-    const frame = document.getElementById("project-frame");
-    const sumEl = document.getElementById("project-summary");
-    const menuEl = document.getElementById("project-assets-menu");
-
-    // load manifest
     let manifest;
     try {
       const resp = await fetch(route.manifest);
@@ -208,6 +204,15 @@
       console.error("Manifest load failed", e);
       return;
     }
+
+    const titleEl = document.querySelector(".page-title h1");
+    const frame = document.getElementById("project-frame");
+    const sumEl = document.getElementById("project-summary");
+    const menuEl = document.getElementById("project-assets-menu");
+    const projectTitle = manifest.title;
+
+    // load manifest
+
 
     // load title
     if (titleEl && manifest.title) titleEl.textContent = manifest.title;
@@ -226,14 +231,63 @@
     // default ifram
     if (frame && manifest.defaultSrc) frame.src = manifest.defaultSrc;
 
+    // set breadcrumb immediately
+    updateBreadcrumb(manifest.title);
+
+    // If URL has ?asset=..., try to load that asset instead of default
+    const assetLabel = params.get('asset');
+    if (assetLabel && Array.isArray(manifest.assets)) {
+    const flatAssets = flattenAssets(manifest.assets); // helper below
+    const found = flatAssets.find(a => a.label === assetLabel && a.embed !== 'newtab');
+    if (found && frame) {
+      frame.src = found.src;
+      updateBreadcrumb(manifest.title, found.label);
+    }
+  }
+
     // build dropdown list
-    
     if (menuEl && Array.isArray(manifest.assets)) {
       menuEl.innerHTML = '';  // clear placeholder items 
-      buildMenu(manifest.assets, menuEl, frame, key);
+      buildMenu(manifest.assets, menuEl, frame, key, projectTitle);
     }
 
+    // this is flattening the assets array so that someone can visit a child label directly without going through the links
+
+    function flattenAssets(items, out = []) {
+      if (!Array.isArray(items)) return out;
+      for (const it of items) {
+        if (Array.isArray(it.children)) flattenAssets(it.children, out);
+        else out.push(it);
+      }
+      return out;
+    }
+
+    
+
   }) ();
+</script>
+
+<!-- updates the secondary nav bar -->
+<script>
+  function updateBreadcrumb(projectTitle, assetLabel) {
+    const breadCrumbList = document.getElementById('breadcrumb-list');
+    if (!breadCrumbList) return;
+
+    // remove old dynamic parts (everything after "portfolio name")
+  while (breadCrumbList.children.length > 2) breadCrumbList.removeChild(breadCrumbList.lastChild);
+
+    // add projectg name
+    const projectLi = document.createElement('li');
+    projectLi.textContent = projectTitle;
+    breadCrumbList.appendChild(projectLi);
+
+    // add child label
+    if (assetLabel) {
+      const assetLi = document.createElement('li');
+      assetLi.textContent = assetLabel;
+      breadCrumbList.appendChild(assetLi);
+    }
+  }
 </script>
 
   <!-- Scroll Top -->

@@ -7,7 +7,6 @@
         {
             "label": "Source Files",
             "children": [
-                { "label": "Play Area (HTML)", "src": "Projects/Yahtzee/code/playingAreaYatzy.html", "embed": "iframe" },
                 { "label": "Script (JS)", "src": "Projects/Yahtzee/code/assets/js/scriptGame.js", "embed": "iframe"}
             ]
         },
