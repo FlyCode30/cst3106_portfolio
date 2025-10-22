@@ -8,6 +8,7 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
 
+
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -27,6 +28,8 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
   <link rel="stylesheet" href="/Projects/Yatzy/code/playAreaStylesheet.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <!-- =======================================================
   * Template Name: Personal
@@ -54,7 +57,7 @@
           <li><a href="about.html">About</a></li>
           <li><a href="resume.html">Resume</a></li>
           <li><a href="portfolio.html">Portfolio</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown"><a href="#"><span>Project Files</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Dropdown 1</a></li>
               <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -88,11 +91,12 @@
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
               <h1>Portfolio Details</h1>
-              <p class="mb-0">testing Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p>
+              <p class="mb-0" id="project-summary"></p>
             </div>
           </div>
         </div>
       </div>
+
       <nav class="breadcrumbs">
         <div class="container">
           <ol>
@@ -141,22 +145,46 @@
     </div>
   </footer>
 
-    <script>
+  <script>
+  (async function () {
 
-  (function () {
     const routes = {
-      yahtzee: { title: 'Yahtzee Game', src: 'Projects/Yahtzee/code/playingAreaYatzy.html' },
-      managerDashboard: { title: 'Managers Dashboard', src: "https://1drv.ms/x/c/8d6f6fc8f269edf4/IQQ1YM5SWlORTJFU-yLrUX_1AVY7zJSQk06u5wqwer3Gd3c" }
+      yahtzee: { 
+        title: 'Yahtzee Game', 
+        src: 'Projects/Yahtzee/code/playingAreaYatzy.html',
+        summarySrc: 'Projects/Yahtzee/code/yahtzeeSummary.md'
+      },
+      managerDashboard: { 
+        title: 'Managers Dashboard', 
+        src: "https://1drv.ms/x/c/8d6f6fc8f269edf4/IQQ1YM5SWlORTJFU-yLrUX_1AVY7zJSQk06u5wqwer3Gd3c",
+        summarySrc: '' 
+      }
     };
-    const key   = new URLSearchParams(location.search).get('p') || 'yatzy';
+
+    const key   = new URLSearchParams(location.search).get('p') || 'yahtzee';
     const cfg   = routes[key];
-    const frame = document.getElementById('project-frame');
-    if (!cfg || !frame) return;
+  
+    if (!cfg) return;
 
     const titleEl = document.querySelector('.page-title h1');
     if (titleEl) titleEl.textContent = cfg.title;
 
-    frame.src = cfg.src; // only set the iframe src; don't touch other containers
+    const frame = document.getElementById('project-frame');
+    if(frame) frame.src = cfg.src; // only set the iframe src; don't touch other containers
+
+    const sumEl = document.getElementById('project-summary');
+    if (sumEl) {
+      if (cfg.summarySrc) {
+        try {
+          const resp = await fetch(cfg.summarySrc);
+          sumEl.innerHTML = await resp.text();
+        } catch {
+          sumEl.innerHTML = '(summary not available)';
+        }
+      } else {
+        sumEl.innerHTML = '';
+      }
+    }
   })();
   </script>
 

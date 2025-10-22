@@ -1,0 +1,3 @@
+This is a Yahtzee game I created for a school project. It is currently a 1 player game in which you roll dice up to 3 times per turn and attempt to get the best possible score based on the combination of dice you get.
+As with most of the projects here, a link to the code can be found at my GitHub page. Click on the link at the bottom of the page, or <a href="https://github.com/FlyCode30/cst3106_yatzy">CLICK HERE.</a>
+If you currently do not have access to my GitHub, then feel free to go to my <a href="contact.html">CONTACT PAGE</a>, and ask for priviliges. 

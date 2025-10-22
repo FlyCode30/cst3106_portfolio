@@ -1,4 +1,3 @@
-/*-------------------------------Current Issues to fix-----------------------------------*/
 
 /*-------------------------------imports-----------------------------------*/
 
@@ -9,12 +8,7 @@ import { calculate3k, calculate4k, calculateYah, calcObjTotal, calcBonusTop, sum
 // imports utility functions
 import { getArrayCounterPure, DICE_SIDES } from './scriptHandle.js';
 
-/*-------------------------------on load stuff-----------------------------------*/
-
-
-let newRollButton;
-let reRollButton;
-let scoreButton;
+/*-------------------------------on load functions-----------------------------------*/
 
 // on load functions
 window.onload = function () {
@@ -34,7 +28,7 @@ function loadScoreBoard(page) {
             reRollButton = document.getElementById('reRoll');
             scoreButton = document.getElementById('score');
 
-            newRollButton.addEventListener('click', onNewRollClick, () => console.log('getDice clicked'));
+            newRollButton.addEventListener('click', resetGameState, () => console.log('getDice clicked'));
             reRollButton.addEventListener('click', onReRollClick, () => console.log('reRoll clicked'));
             scoreButton.addEventListener('click', onScoreClick, () => console.log('scoreClear clicked'));
             updateButtons();
@@ -63,6 +57,9 @@ function setLoadDice(values) {
 
 /*-------------------------------variables-----------------------------------*/
 
+let newRollButton;
+let reRollButton;
+let scoreButton;
 
 const selectImage = document.getElementById;
 
@@ -87,10 +84,10 @@ const dieImg = v => v === 0 ? `assets/images/side0.png` : `assets/images/side${v
 
 
 let tempTopScores = { scoreTop1: 0, scoreTop2: 0, scoreTop3: 0, scoreTop4: 0, scoreTop5: 0, scoreTop6: 0 };
-const comTopScores = { scoreTop1: null, scoreTop2: null, scoreTop3: null, scoreTop4: null, scoreTop5: null, scoreTop6: null };
+const comTopScores = { scoreTop1: 0, scoreTop2: 0, scoreTop3: 0, scoreTop4: 0, scoreTop5: 0, scoreTop6: 0 };
 let totalScores = { scoreTopSub: 0, scoreTopBonus: 0, scoreTopTotal: 0, scoreBotTotal: 0, scoreGameTotal: 0}
 let tempBotScores = { scoreBot3k: 0, scoreBot4k: 0, scoreBotFH: 0, scoreBotSS: 0, scoreBotLS: 0, scoreBotYah: 0, scoreBotChan: 0 };
-const comBotScores = { scoreBot3k: null, scoreBot4k: null, scoreBotFH: null, scoreBotSS: null, scoreBotLS: null, scoreBotYah: null, scoreBotChan: null };
+const comBotScores = { scoreBot3k: 0, scoreBot4k: 0, scoreBotFH: 0, scoreBotSS: 0, scoreBotLS: 0, scoreBotYah: 0, scoreBotChan: 0 };
 
 /*------------------------------- Update functions-----------------------------------*/
 
@@ -129,20 +126,28 @@ function updateButtons() {
 
 function startNewTurn() {
     rollCount = 0;
+    held = Array(DICE_COUNT).fill(false);
+    const dice = rollFullPure(DICE_COUNT);
+    applyRoll(dice);
+    rollCount += 1;
     updateButtons();
 }
 
+function resetGameState() {
+    clearComScores();
+    resetInputStyles();
+    displayTotalsUI();
+
+    startNewTurn();
+
+    console.log("Temp Top Scores are: ", tempTopScores);
+    console.log("Temp Bot Scores are: ", tempBotScores);
+    console.log("Com Top Scores are: ", comTopScores);
+    console.log("Com Bot Scores are: ", comBotScores);
+    console.log("Total scores are: ", totalScores);
+}
 
 /*------------------------------- button click functions-----------------------------------*/
-
-function onNewRollClick() {
-    // guard
-    // if (rollCount != 0) return;
-
-    newRoll();
-    rollCount = 1;
-    updateButtons();
-}
 
 function onReRollClick() {
     if (rollCount >= MAX_ROLLS) return;
@@ -155,8 +160,6 @@ function onReRollClick() {
 function onScoreClick() {
 
     if (rollCount === 0) return;
-
-    
     const category = getFilledCategoryFromDOM();
     if (!category) {
         console.warn("Nothing to committ: Fill exactly 1 box first.");
@@ -173,30 +176,14 @@ function onScoreClick() {
 
     clearPlaceholders();
     styleInputValues();
+    displayTotalsUI();
  
-
     startNewTurn();
-    onNewRollClick();
 
     console.log("Total Scores are: ", totalScores)
 }
 
 /*-------------------------------roll functions-----------------------------------*/
-
-function resetTurnState() {
-    held = Array(DICE_COUNT).fill(false);
-    choiceArray = Array(DICE_COUNT).fill(0);
-    counter = 0;
-}
-
-// start a new roll by clearing the held status, applying a new roll
-
-function newRoll() {
-    held = Array(DICE_COUNT).fill(false);
-    const dice = rollFullPure(DICE_COUNT);
-    applyRoll(dice);
-    // applyChoice();
-}
 
 // takes a rolled array and creates the counter array used for scoring
 
@@ -219,11 +206,11 @@ function reRoll() {
 
 // looks at the rolled array and creates a choice array based on whether or not a player has selected that spot. 
 
-function applyChoice() {
-    const choice = rollArray.map((v,i) => held[i] ? v : 0);
-    choiceArray = choice; 
-    console.log("Choice array is:", choiceArray);
-}
+// function applyChoice() {
+//     const choice = rollArray.map((v,i) => held[i] ? v : 0);
+//     choiceArray = choice; 
+//     console.log("Choice array is:", choiceArray);
+// }
 
 /*-------------------------------hold functions-----------------------------------*/
 
@@ -257,14 +244,13 @@ function commitScore(category) {
     const field = document.querySelector(`.score-input[data-category="${category}"]`);
     if (!field) return;
 
-    const value = field.value.trim() !== '' ? Number(field.value) : 0; // allow crossing out with 0
+    const raw = field.value.trim();
+    const value = raw === "" ? 0 : Number(raw);  // allows crossing out with 0
 
     if (category.startsWith('scoreTop')) {
-        if (comTopScores[category] === null) comTopScores[category] = value; {
-        }
+        if (comTopScores[category] === 0) comTopScores[category] = value;  
     } else {
-        if (comBotScores[category] === null) comBotScores[category] = value; {
-        }
+        if (comBotScores[category] === 0) comBotScores[category] = value;    
     }
 
     field.readOnly = true;
@@ -303,7 +289,6 @@ function calculatTotals() {
 }
 
 // used to get the scores a player puts in the field so they can be converted to committed scores
-
 function getFilledCategoryFromDOM() {
     const fields = document.querySelectorAll('.score-input');
     for (const field of fields) {
@@ -312,7 +297,7 @@ function getFilledCategoryFromDOM() {
 
         // skip categories already filled
         const isTop = cat.startsWith('scoreTop');
-        const isCommitted = isTop ? comTopScores[cat] !== null : comBotScores[cat] !== null;
+        const isCommitted = isTop ? comTopScores[cat] !== 0 : comBotScores[cat] !== 0;
 
         // treat non empty as the category
         if (!isCommitted && field.value.trim() !== "") return cat;
@@ -325,7 +310,6 @@ function getFilledCategoryFromDOM() {
 
 
 // render all images
-
 function renderAllImages () {
     renderRollImages();
     renderChoiceImages();
@@ -350,10 +334,6 @@ function renderChoiceImages() {
     }
 }
 
-
-
-
-
 /*-------------------------------DOM functions-----------------------------------*/
 
 
@@ -364,7 +344,7 @@ function fillPlaceholders() {
     for (const [cat, val] of Object.entries(tempTopScores)) {
     const el = document.querySelector(`[data-category="${cat}"]`);
     // console.log("TOP map:", cat, "temp=", val, "input?", !!el, "committed=", comTopScores[cat]);
-    if (!el || comTopScores[cat] !== null) continue;
+    if (!el || comTopScores[cat] !== 0) continue;
     el.value = "";
     el.placeholder = String(val ?? "");
   }
@@ -373,14 +353,14 @@ function fillPlaceholders() {
     for (const [cat, val] of Object.entries(tempBotScores)) {
     const el = document.querySelector(`[data-category="${cat}"]`);
     // console.log("BOT map:", cat, "temp=", val, "input?", !!el, "committed=", comBotScores[cat]);
-    if (!el || comBotScores[cat] !== null) continue;
+    if (!el || comBotScores[cat] !== 0) continue;
     el.value = "";
     el.placeholder = String(val ?? "");
   }
+//   console.log("testing break point");
 }
 
 // used on new roll to clear any placeholder values 
-
 function clearPlaceholders() {
 
     const fields = document.querySelectorAll('.score-input');
@@ -392,8 +372,8 @@ function clearPlaceholders() {
     }
 }
 
-// fills the DOM elements related to totals
 
+// fills the DOM elements related to totals
 function fillTotals () {
 
     for (const [cat, val] of Object.entries(totalScores)) {
@@ -406,8 +386,6 @@ function fillTotals () {
     });
   }
 }
-
-
 
 /*-------------------------------formatting functions-----------------------------------*/
 
@@ -427,12 +405,33 @@ function styleInputValues() {
     });
 }
 
-
-
-function endRoll() {
-    resetTurnState();
-    console.log("turn state has been reset");
-    const dice = rollFullPure(DICE_COUNT);
-    applyRoll(dice);
-    renderAllImages();
+function clearComScores() {
+  [comTopScores, comBotScores, totalScores].forEach(obj => {
+    Object.keys(obj).forEach(k => obj[k] = 0);
+  });
 }
+
+// reset formatting in DOM
+function resetInputStyles() {
+    const inputFields = document.querySelectorAll('.score-input, .score-totals');
+
+    inputFields.forEach( field => {
+        field.value = "";
+        field.placeholder = "";
+        field.classList.remove("inputValues");
+    })
+}
+
+// display total score on the UI
+
+function displayTotalsUI() {
+  const totalDisplay = document.getElementById('current-total-display');
+  if (!totalDisplay) return; // just in case it’s not found
+
+  totalDisplay.textContent = totalScores.scoreGameTotal;
+}
+
+
+
+
+
