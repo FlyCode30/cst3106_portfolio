@@ -93,6 +93,12 @@
           <ol id="breadcrumb-list">
             <li><a href="index.html">Home</a></li>
             <li class="current"><a href="portfolio.html">Portfolio Home</a></li>
+            
+            <!--Project Default-->
+            <li id="crumb-default"><a id="crumb-default-link" href="#"></a></li>
+
+            <!--Current extra file-->
+            <li id="crumb-current" class="d-none"><span></span></li>
           </ol>
         </div>
       </nav>
@@ -137,51 +143,55 @@
 
 <!-- builds menu for dropdowns and secondary nav -->
 <script>
-  function buildMenu(items, parentUl, frame, projectKey, projectTitle) {
-    if (!Array.isArray(items)) {
-      console.warn("buildMenu expected as array, got: ", items);
-      return;
-    }
-    
-    items.forEach(item => {
-      const li = document.createElement('li');
+function buildMenu(items, parentUl, frame, projectKey, projectTitle, defaultSrc, defaultLabel) {
+  if (!Array.isArray(items)) return;
 
-      if (Array.isArray(item.children)) {
-        li.classList.add('dropdown');
-        const a = document.createElement('a');
-        a.href = "#";
-        a.innerHTML = `<span>${item.label}</span> <i class="bi bi-chevron-down toggle-dropdown"></i>`;
-        const subUl = document.createElement("ul");
-        buildMenu(item.children, subUl, frame, projectKey, projectTitle);
-        li.appendChild(a);
-        li.appendChild(subUl);
-      } else {
-        const a = document.createElement("a");
-        a.href = "#";
-        a.textContent = item.label;
+  items.forEach(item => {
+    const li = document.createElement('li');
 
-        a.addEventListener("click", ev => {
-          ev.preventDefault();
-          if (item.embed === "newtab") {
-            window.open(item.src, '_blank', 'noopener');
-          } else if (frame) {
-            frame.src = item.src;
-          }
-          
-          updateBreadcrumb(projectTitle, item.label);
+    if (Array.isArray(item.children)) {
+      li.classList.add('dropdown');
+      const a = document.createElement('a');
+      a.href = '#';
+      a.innerHTML = `<span>${item.label}</span> <i class="bi bi-chevron-down toggle-dropdown"></i>`;
+      const subUl = document.createElement('ul');
 
-          const url = new URL(location.href);
-          url.searchParams.set ("p", projectKey);
-          url.searchParams.set("asset", encodeURIComponent(item.label));
-          history.replaceState(null,"", url);
-          });
+      // pass all args on recursion
+      buildMenu(item.children, subUl, frame, projectKey, projectTitle, defaultSrc, defaultLabel);
 
-          li.appendChild(a);
+      li.appendChild(a);
+      li.appendChild(subUl);
+    } else {
+      const a = document.createElement('a');
+      a.href = '#';
+      a.textContent = item.label;
+
+      a.addEventListener('click', (ev) => {
+        ev.preventDefault();
+
+        if (item.embed === 'newtab') {
+          window.open(item.src, '_blank', 'noopener');
+        } else if (frame) {
+          frame.src = item.src;
         }
-        
-        parentUl.appendChild(li);
+
+        // ✅ Breadcrumb: Project / Default(link) / Current(plain)
+        updateBreadcrumb(projectTitle, defaultLabel, defaultSrc, item.label, { frame, projectKey });
+
+
+        // URL sync
+        const url = new URL(location.href);
+        url.searchParams.set('p', projectKey);
+        url.searchParams.set('asset', encodeURIComponent(item.label));
+        history.replaceState(null, '', url);
       });
-  }
+
+      li.appendChild(a);
+    }
+
+    parentUl.appendChild(li);
+  });
+}
 </script>
 
 <script>
@@ -231,8 +241,9 @@
     // default ifram
     if (frame && manifest.defaultSrc) frame.src = manifest.defaultSrc;
 
-    // set breadcrumb immediately
-    updateBreadcrumb(manifest.title);
+    const defaultLabel = 'Main'; // or per-manifest
+    updateBreadcrumb(manifest.title, defaultLabel, manifest.defaultSrc, null, { frame, projectKey: key });
+
 
     // If URL has ?asset=..., try to load that asset instead of default
     const assetLabel = params.get('asset');
@@ -248,7 +259,7 @@
     // build dropdown list
     if (menuEl && Array.isArray(manifest.assets)) {
       menuEl.innerHTML = '';  // clear placeholder items 
-      buildMenu(manifest.assets, menuEl, frame, key, projectTitle);
+      buildMenu(manifest.assets, menuEl, frame, key, manifest.title, manifest.defaultSrc, defaultLabel);
     }
 
     // this is flattening the assets array so that someone can visit a child label directly without going through the links
@@ -269,25 +280,60 @@
 
 <!-- updates the secondary nav bar -->
 <script>
-  function updateBreadcrumb(projectTitle, assetLabel) {
-    const breadCrumbList = document.getElementById('breadcrumb-list');
-    if (!breadCrumbList) return;
+function updateBreadcrumb(projectTitle, defaultLabel, defaultSrc, currentLabel, ctx = {}) {
+  // allow passing { frame, projectKey } OR fallback to DOM lookup
+  const frameEl     = ctx.frame || document.getElementById('project-frame');
+  const projectKey  = ctx.projectKey;
 
-    // remove old dynamic parts (everything after "portfolio name")
-  while (breadCrumbList.children.length > 2) breadCrumbList.removeChild(breadCrumbList.lastChild);
+  const list = document.querySelector('.breadcrumbs ol');
+  if (!list) return;
 
-    // add projectg name
-    const projectLi = document.createElement('li');
-    projectLi.textContent = projectTitle;
-    breadCrumbList.appendChild(projectLi);
+  // Keep only "Home" and "Portfolio Home"
+  while (list.children.length > 2) list.removeChild(list.lastChild);
 
-    // add child label
-    if (assetLabel) {
-      const assetLi = document.createElement('li');
-      assetLi.textContent = assetLabel;
-      breadCrumbList.appendChild(assetLi);
-    }
+  // Project
+  const liProject = document.createElement('li');
+  liProject.textContent = projectTitle;
+  list.appendChild(liProject);
+
+  // Default file (as an in-page link that resets iframe + URL)
+  if (defaultLabel && defaultSrc) {
+    const liDefault = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = defaultSrc;           // good for right-click / copy link
+    link.textContent = defaultLabel;  // NOTE: no target="_blank"
+
+    link.addEventListener('click', (e) => {
+      // Only intercept normal left-clicks (allow cmd/ctrl-click to open new tab)
+      if (!e.ctrlKey && !e.metaKey && e.button === 0) {
+        e.preventDefault();
+
+        if (frameEl) frameEl.src = defaultSrc;
+
+        // Re-render crumbs to: Project / Default
+        updateBreadcrumb(projectTitle, defaultLabel, defaultSrc, null, { frame: frameEl, projectKey });
+
+        // Clean URL: keep project, remove asset
+        if (projectKey) {
+          const url = new URL(location.href);
+          url.searchParams.set('p', projectKey);
+          url.searchParams.delete('asset');
+          history.replaceState(null, '', url);
+        }
+      }
+    });
+
+    liDefault.appendChild(link);
+    list.appendChild(liDefault);
   }
+
+  // Current extra file (plain text if different from default)
+  if (currentLabel && currentLabel !== defaultLabel) {
+    const liCurrent = document.createElement('li');
+    liCurrent.textContent = currentLabel;
+    list.appendChild(liCurrent);
+  }
+}
 </script>
 
   <!-- Scroll Top -->
