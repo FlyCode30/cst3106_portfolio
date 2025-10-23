@@ -1,7 +1,7 @@
 
 { 
     "title": "Yahtzee",
-    "summarySrc": "Projects/Yahtzee/yahtzeeSummary.md",
+    "summarySrc": "Projects/Yahtzee/assets/docs/yahtzeeSummary.md",
     "defaultSrc": "Projects/Yahtzee/playingAreaYatzy.html",
     "assets": [
         {
@@ -14,7 +14,7 @@
             "label": "Documentation",
             "children": [
                 { "label": "Rules(PDF)", "src": "Projects/Yahtzee/docs/rules.pdf", "embed": "iframe"},
-                { "label": "Design Notes(TXT)", "src": "Projects/Yahtzee/docs/designNotes.txt", "embed": "iframe"}
+                { "label": "Design Notes(md)", "src": "Projects/Yahtzee/assets/docs/design_documentation.md", "embed": "iframe"}
             ]
         }
             ]
