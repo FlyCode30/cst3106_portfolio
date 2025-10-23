@@ -143,7 +143,7 @@
 
 <!-- builds menu for dropdowns and secondary nav -->
 <script>
-function buildMenu(items, parentUl, frame, projectKey, projectTitle, defaultSrc, defaultLabel) {
+function buildMenu(items, parentUl, frame, projectKey, projectTitle, defaultSrc) {
   if (!Array.isArray(items)) return;
 
   items.forEach(item => {
@@ -157,7 +157,7 @@ function buildMenu(items, parentUl, frame, projectKey, projectTitle, defaultSrc,
       const subUl = document.createElement('ul');
 
       // pass all args on recursion
-      buildMenu(item.children, subUl, frame, projectKey, projectTitle, defaultSrc, defaultLabel);
+      buildMenu(item.children, subUl, frame, projectKey, projectTitle, defaultSrc);
 
       li.appendChild(a);
       li.appendChild(subUl);
@@ -176,7 +176,7 @@ function buildMenu(items, parentUl, frame, projectKey, projectTitle, defaultSrc,
         }
 
         // ✅ Breadcrumb: Project / Default(link) / Current(plain)
-        updateBreadcrumb(projectTitle, defaultLabel, defaultSrc, item.label, { frame, projectKey });
+        updateBreadcrumb (projectTitle, defaultSrc, item.label);
 
 
         // URL sync
@@ -192,9 +192,9 @@ function buildMenu(items, parentUl, frame, projectKey, projectTitle, defaultSrc,
     parentUl.appendChild(li);
   });
 }
-</script>
 
-<script>
+
+// updates the menu for each project
   (async function () {
     const routes = {
       yahtzee: {manifest: "Projects/assets/json/projectsManifest.json" },
@@ -238,28 +238,28 @@ function buildMenu(items, parentUl, frame, projectKey, projectTitle, defaultSrc,
       }
     }
 
-    // default ifram
+    // Default iframe (load the project’s main page)
     if (frame && manifest.defaultSrc) frame.src = manifest.defaultSrc;
 
-    const defaultLabel = 'Main'; // or per-manifest
-    updateBreadcrumb(manifest.title, defaultLabel, manifest.defaultSrc, null, { frame, projectKey: key });
-
+    // Initialize breadcrumbs for this project
+    updateBreadcrumb(manifest.title, manifest.defaultSrc, null);
+    initBreadcrumb(frame, key);
 
     // If URL has ?asset=..., try to load that asset instead of default
     const assetLabel = params.get('asset');
     if (assetLabel && Array.isArray(manifest.assets)) {
-    const flatAssets = flattenAssets(manifest.assets); // helper below
-    const found = flatAssets.find(a => a.label === assetLabel && a.embed !== 'newtab');
-    if (found && frame) {
-      frame.src = found.src;
-      updateBreadcrumb(manifest.title, found.label);
+      const flatAssets = flattenAssets(manifest.assets);
+      const found = flatAssets.find(a => a.label === assetLabel && a.embed !== 'newtab');
+      if (found && frame) {
+        frame.src = found.src;
+        updateBreadcrumb(manifest.title, manifest.defaultSrc, found.label);
+      }
     }
-  }
 
     // build dropdown list
     if (menuEl && Array.isArray(manifest.assets)) {
       menuEl.innerHTML = '';  // clear placeholder items 
-      buildMenu(manifest.assets, menuEl, frame, key, manifest.title, manifest.defaultSrc, defaultLabel);
+      buildMenu(manifest.assets, menuEl, frame, key, manifest.title, manifest.defaultSrc);
     }
 
     // this is flattening the assets array so that someone can visit a child label directly without going through the links
@@ -276,63 +276,58 @@ function buildMenu(items, parentUl, frame, projectKey, projectTitle, defaultSrc,
     
 
   }) ();
-</script>
 
-<!-- updates the secondary nav bar -->
-<script>
-function updateBreadcrumb(projectTitle, defaultLabel, defaultSrc, currentLabel, ctx = {}) {
-  // allow passing { frame, projectKey } OR fallback to DOM lookup
-  const frameEl     = ctx.frame || document.getElementById('project-frame');
-  const projectKey  = ctx.projectKey;
+  function updateBreadcrumb(projectTitle, defaultSrc, currentLabel) {
+    const defaultLink = document.getElementById('crumb-default-link'); // <a>
+    if (defaultLink) {
+      defaultLink.textContent = `${projectTitle} Main`;
+      defaultLink.href = defaultSrc || '#';
+      // stash for click handler
+      defaultLink.dataset.src = defaultSrc || '';
+      defaultLink.dataset.title = projectTitle || '';
+    }
 
-  const list = document.querySelector('.breadcrumbs ol');
-  if (!list) return;
-
-  // Keep only "Home" and "Portfolio Home"
-  while (list.children.length > 2) list.removeChild(list.lastChild);
-
-  // Project
-  const liProject = document.createElement('li');
-  liProject.textContent = projectTitle;
-  list.appendChild(liProject);
-
-  // Default file (as an in-page link that resets iframe + URL)
-  if (defaultLabel && defaultSrc) {
-    const liDefault = document.createElement('li');
-    const link = document.createElement('a');
-    link.href = defaultSrc;           // good for right-click / copy link
-    link.textContent = defaultLabel;  // NOTE: no target="_blank"
-
-    link.addEventListener('click', (e) => {
-      // Only intercept normal left-clicks (allow cmd/ctrl-click to open new tab)
-      if (!e.ctrlKey && !e.metaKey && e.button === 0) {
-        e.preventDefault();
-
-        if (frameEl) frameEl.src = defaultSrc;
-
-        // Re-render crumbs to: Project / Default
-        updateBreadcrumb(projectTitle, defaultLabel, defaultSrc, null, { frame: frameEl, projectKey });
-
-        // Clean URL: keep project, remove asset
-        if (projectKey) {
-          const url = new URL(location.href);
-          url.searchParams.set('p', projectKey);
-          url.searchParams.delete('asset');
-          history.replaceState(null, '', url);
-        }
+    const currentLi   = document.getElementById('crumb-current');     // <li>
+    const currentSpan = currentLi ? currentLi.querySelector('span') : null;
+    if (currentLi && currentSpan) {
+      if (currentLabel) {
+        currentSpan.textContent = currentLabel;
+        currentLi.classList.remove('d-none');
+      } else {
+        currentSpan.textContent = '';
+        currentLi.classList.add('d-none');
       }
-    });
-
-    liDefault.appendChild(link);
-    list.appendChild(liDefault);
+    }
   }
 
-  // Current extra file (plain text if different from default)
-  if (currentLabel && currentLabel !== defaultLabel) {
-    const liCurrent = document.createElement('li');
-    liCurrent.textContent = currentLabel;
-    list.appendChild(liCurrent);
-  }
+// updates the secondary nav bar
+
+function initBreadcrumb(frame, projectKey, defaultSrc, projectTitle) {
+  const defaultLink = document.getElementById('crumb-default-link');
+  if (!defaultLink) return;
+
+  defaultLink.addEventListener('click', (e) => {
+    // intercept normal left-clicks only (allow cmd/ctrl-click)
+    if (!e.ctrlKey && !e.metaKey && e.button === 0) {
+      e.preventDefault();
+
+      const src   = defaultLink.dataset.src;
+      const title = defaultLink.dataset.title;
+
+      if (frame && src) frame.src = src;
+
+      // back to just "... / ProjectTitle Main"
+      updateBreadcrumb(title, src, null);
+
+      // keep ?p, remove ?asset
+      if (projectKey) {
+        const url = new URL(location.href);
+        url.searchParams.set('p', projectKey);
+        url.searchParams.delete('asset');
+        history.replaceState(null, '', url);
+      }
+    }
+  });
 }
 </script>
 
