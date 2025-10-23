@@ -1,13 +1,13 @@
 
 { 
     "title": "Yahtzee",
-    "summarySrc": "Projects/Yahtzee/code/yahtzeeSummary.md",
-    "defaultSrc": "Projects/Yahtzee/code/playingAreaYatzy.html",
+    "summarySrc": "Projects/Yahtzee/yahtzeeSummary.md",
+    "defaultSrc": "Projects/Yahtzee/playingAreaYatzy.html",
     "assets": [
         {
             "label": "Source Files",
             "children": [
-                { "label": "Script (JS)", "src": "Projects/Yahtzee/code/assets/js/scriptGame.js", "embed": "iframe"}
+                { "label": "Script (JS)", "src": "Projects/Yahtzee/assets/js/scriptGame.js", "embed": "iframe"}
             ]
         },
         {
