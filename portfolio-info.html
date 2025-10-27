@@ -8,9 +8,6 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
 
-  <!-- Marked Down -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -106,19 +103,24 @@
       </nav>
     </div><!-- End Page Title -->
 
+    <!-- sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"
+              style="width:100%; min-height:900px; border:0;"> -->
+
   <!-- Project Section -->
 
     <section id="portfolio" class="portfolio section ">
 
       <div class="container">
-
-      <iframe id="project-frame" 
-              loading = "lazy"
-              referrerpolicy="no-referrer"
-              title="Project viewer"
-              frameborder="0"
-              allowfullscreen
-              style="width:100%; min-height:900px; border:0;" ></iframe>
+        
+        <iframe id="project-frame"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          title="Project viewer"
+          frameborder="0"
+          allowfullscreen
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"
+          style="width:100%; min-height:900px; border:0;">
+        </iframe>
 
       </div>
     </section>
@@ -199,8 +201,8 @@ function buildMenu(items, parentUl, frame, projectKey, projectTitle, defaultSrc)
 // updates the menu for each project
   (async function () {
     const routes = {
-      yahtzee: {manifest: "Projects/assets/json/projectsManifest.json" },
-      managerDashboard: {manifest: "Projects/assets/json/projectsManifest.json"}
+      yahtzee: {manifest: "Projects/Yahtzee/assets/json/yahtzeeManifest.json" },
+      managerDashboard: {manifest: "Projects/Mock_Manager_Dashboard/assets/json/dashboardManifest.json"}
     };
 
     const params = new URLSearchParams(location.search);

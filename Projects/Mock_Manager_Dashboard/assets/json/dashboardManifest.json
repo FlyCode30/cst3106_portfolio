@@ -1,0 +1,22 @@
+{ 
+    "title": "Mock Manager Dashboard",
+    "summarySrc": "",
+    "defaultSrc": "https://1drv.ms/u/c/8d6f6fc8f269edf4/IQSaJcic-zqwTbx8CZgQR2xnASasLdNnXtvoIbsnWEwGQvk",
+    "assets": [
+        {
+            "label": "Source Files",
+            "children": [
+                { "label": "", "src": "", "embed": "iframe"}
+            ]
+        },
+        {
+            "label": "Documentation",
+            "children": [
+                
+            ]
+        }
+            ]
+    
+}
+    
+

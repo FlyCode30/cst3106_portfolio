@@ -1,6 +1,6 @@
 { 
     "title": "Yahtzee",
-    "summarySrc": "Projects/Yahtzee/assets/docs/yahtzeeSummary.md",
+    "summarySrc": "Projects/Yahtzee/assets/docs/yahtzeeSummary.txt",
     "defaultSrc": "Projects/Yahtzee/playingAreaYatzy.html",
     "assets": [
         {

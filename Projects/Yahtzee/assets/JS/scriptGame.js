@@ -252,8 +252,7 @@ function commitScore(category) {
     } else {
         if (comBotScores[category] === 0) comBotScores[category] = value;    
     }
-
-    field.readOnly = true;
+    
     field.value = String(value);
 }
 

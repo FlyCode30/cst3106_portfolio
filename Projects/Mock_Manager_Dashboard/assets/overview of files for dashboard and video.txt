@@ -1,0 +1,31 @@
+Draft Notes for Managers Dashboard
+
+- introduce welcome page
+- purpose - navigational hub that makes it easier to connect with different reports
+- click to go to ADT report
+- overview
+- primary area of focus on the right and the sources for those patients on the left.
+- the idea being to replicate a natural flow to the data similar to how we would read from left to right. So patients start on the left and then go to the right.
+- this is for inpatients only, but the overall structure would be similar for other areas of the hosptial
+- everything can be filtered with everything else
+- on the right
+- bigger picture data on the top that gives you a summary and then finer detail below that
+- total hospital occupancy
+- occupancy be service areas
+- occupancy by units
+- show how clicking on one filters another
+- give a quick breakdown of the ADT categories
+
+- files needed for dashboard manager
+
+- dashboard video
+- screenshot of database
+- video explanation of database
+- excel file of tracker
+- documenation 
+- design notes for dashboard
+- design notes for database
+- design notes for excel data structure
+- explanation for why I'm not using MySQL
+- documentation for hospital structure
+
