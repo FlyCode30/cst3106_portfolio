@@ -1,0 +1,12 @@
+file structure for portfolio
+
+my-portfolio/
+├─ node_modules/
+│  ├─ express/
+│  ├─ ...
+├─ package.json
+├─ server.js
+└─ public/
+   ├─ index.html
+   ├─ assets/
+   └─ ...

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Portfolio Details - Personal Bootstrap Template</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- =======================================================
+  * Template Name: Personal
+  * Template URL: https://bootstrapmade.com/personal-free-resume-bootstrap-template/
+  * Updated: Mar 05 2025 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="portfolio-details-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.webp" alt=""> -->
+        <h1 class="sitename">Personal</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="resume.html">Resume</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li class="dropdown">
+            <a href="#">
+              <span>Project Files</span>
+              <i class="bi bi-chevron-down toggle-dropdown"></i>
+            </a>
+            <!-- This UL will be populated by your JS -->
+             <ul id="project-assets-menu"></ul>
+          </li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1>Portfolio Details</h1>
+              <p class="mb-0" id="project-summary"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="breadcrumbs">
+        <div class="container">
+          <ol id="breadcrumb-list">
+            <li><a href="index.html">Home</a></li>
+            <li class="current"><a href="portfolio.html">Portfolio Home</a></li>
+            
+            <!--Project Default-->
+            <li id="crumb-default"><a id="crumb-default-link" href="#"></a></li>
+
+            <!--Current extra file-->
+            <li id="crumb-current" class="d-none"><span></span></li>
+          </ol>
+        </div>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <!-- sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"
+              style="width:100%; min-height:900px; border:0;"> -->
+
+  <!-- Project Section -->
+
+    <section id="portfolio" class="portfolio section ">
+
+      <div class="container">
+        
+        <iframe id="project-frame"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          title="Project viewer"
+          frameborder="0"
+          allowfullscreen
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"
+          style="width:100%; min-height:900px; border:0;">
+        </iframe>
+
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+    <div class="container">
+      <h3 class="sitename">Personal</h3>
+      <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-skype"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">Personal</strong> <span>All Rights Reserved</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<!-- builds menu for dropdowns and secondary nav -->
+<script>
+function buildMenu(items, parentUl, frame, projectKey, projectTitle, defaultSrc) {
+  if (!Array.isArray(items)) return;
+
+  items.forEach(item => {
+    const li = document.createElement('li');
+
+    if (Array.isArray(item.children)) {
+      li.classList.add('dropdown');
+      const a = document.createElement('a');
+      a.href = '#';
+      a.innerHTML = `<span>${item.label}</span> <i class="bi bi-chevron-down toggle-dropdown"></i>`;
+      const subUl = document.createElement('ul');
+
+      // pass all args on recursion
+      buildMenu(item.children, subUl, frame, projectKey, projectTitle, defaultSrc);
+
+      li.appendChild(a);
+      li.appendChild(subUl);
+    } else {
+      const a = document.createElement('a');
+      a.href = '#';
+      a.textContent = item.label;
+
+      a.addEventListener('click', (ev) => {
+        ev.preventDefault();
+
+        if (item.embed === 'newtab') {
+          window.open(item.src, '_blank', 'noopener');
+        } else if (frame) {
+          frame.src = item.src;
+        }
+
+        // ✅ Breadcrumb: Project / Default(link) / Current(plain)
+        updateBreadcrumb (projectTitle, defaultSrc, item.label);
+
+
+        // URL sync
+        const url = new URL(location.href);
+        url.searchParams.set('p', projectKey);
+        url.searchParams.set('asset', encodeURIComponent(item.label));
+        history.replaceState(null, '', url);
+      });
+
+      li.appendChild(a);
+    }
+
+    parentUl.appendChild(li);
+  });
+}
+
+
+// updates the menu for each project
+  (async function () {
+    const routes = {
+      yahtzee: {manifest: "projects/yahtzee/assets/json/yahtzeeManifest.json" },
+      managerDashboard: {manifest: "projects/manager_dashboard/assets/json/dashboardManifest.json"}
+    };
+
+    const params = new URLSearchParams(location.search);
+    const key = params.get('p') || 'yahtzee';
+    const route = routes[key];
+    if (!route) return;
+
+    let manifest;
+    try {
+      const resp = await fetch(route.manifest);
+      manifest = await resp.json();
+    } catch (e) {
+      console.error("Manifest load failed", e);
+      return;
+    }
+
+    const titleEl = document.querySelector(".page-title h1");
+    const frame = document.getElementById("project-frame");
+    const sumEl = document.getElementById("project-summary");
+    const menuEl = document.getElementById("project-assets-menu");
+    const projectTitle = manifest.title;
+
+    // load manifest
+
+
+    // load title
+    if (titleEl && manifest.title) titleEl.textContent = manifest.title;
+
+    // load summary
+    if (sumEl && manifest.summarySrc) {
+      try {
+        const resp = await fetch(manifest.summarySrc);
+        const text = await resp.text();
+        sumEl.innerHTML = text; // use marked.parse(text) if you switch to Markdown rendering
+      } catch (e) {
+        sumEl.textContent = "(summary not available)";
+      }
+    }
+
+    // Default iframe (load the project’s main page)
+    if (frame && manifest.defaultSrc) frame.src = manifest.defaultSrc;
+
+    // Initialize breadcrumbs for this project
+    updateBreadcrumb(manifest.title, manifest.defaultSrc, null);
+    initBreadcrumb(frame, key);
+
+    // If URL has ?asset=..., try to load that asset instead of default
+    const assetLabel = params.get('asset');
+    if (assetLabel && Array.isArray(manifest.assets)) {
+      const flatAssets = flattenAssets(manifest.assets);
+      const found = flatAssets.find(a => a.label === assetLabel && a.embed !== 'newtab');
+      if (found && frame) {
+        frame.src = found.src;
+        updateBreadcrumb(manifest.title, manifest.defaultSrc, found.label);
+      }
+    }
+
+    // build dropdown list
+    if (menuEl && Array.isArray(manifest.assets)) {
+      menuEl.innerHTML = '';  // clear placeholder items 
+      buildMenu(manifest.assets, menuEl, frame, key, manifest.title, manifest.defaultSrc);
+    }
+
+    // this is flattening the assets array so that someone can visit a child label directly without going through the links
+
+    function flattenAssets(items, out = []) {
+      if (!Array.isArray(items)) return out;
+      for (const it of items) {
+        if (Array.isArray(it.children)) flattenAssets(it.children, out);
+        else out.push(it);
+      }
+      return out;
+    }
+
+    
+
+  }) ();
+
+  function updateBreadcrumb(projectTitle, defaultSrc, currentLabel) {
+    const defaultLink = document.getElementById('crumb-default-link'); // <a>
+    if (defaultLink) {
+      defaultLink.textContent = `${projectTitle} Main`;
+      defaultLink.href = defaultSrc || '#';
+      // stash for click handler
+      defaultLink.dataset.src = defaultSrc || '';
+      defaultLink.dataset.title = projectTitle || '';
+    }
+
+    const currentLi   = document.getElementById('crumb-current');     // <li>
+    const currentSpan = currentLi ? currentLi.querySelector('span') : null;
+    if (currentLi && currentSpan) {
+      if (currentLabel) {
+        currentSpan.textContent = currentLabel;
+        currentLi.classList.remove('d-none');
+      } else {
+        currentSpan.textContent = '';
+        currentLi.classList.add('d-none');
+      }
+    }
+  }
+
+// updates the secondary nav bar
+
+function initBreadcrumb(frame, projectKey, defaultSrc, projectTitle) {
+  const defaultLink = document.getElementById('crumb-default-link');
+  if (!defaultLink) return;
+
+  defaultLink.addEventListener('click', (e) => {
+    // intercept normal left-clicks only (allow cmd/ctrl-click)
+    if (!e.ctrlKey && !e.metaKey && e.button === 0) {
+      e.preventDefault();
+
+      const src   = defaultLink.dataset.src;
+      const title = defaultLink.dataset.title;
+
+      if (frame && src) frame.src = src;
+
+      // back to just "... / ProjectTitle Main"
+      updateBreadcrumb(title, src, null);
+
+      // keep ?p, remove ?asset
+      if (projectKey) {
+        const url = new URL(location.href);
+        url.searchParams.set('p', projectKey);
+        url.searchParams.delete('asset');
+        history.replaceState(null, '', url);
+      }
+    }
+  });
+}
+</script>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/typed.js/typed.umd.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <!-- <script type= "module" src="Projects/Yatzy/code/scriptGame.js" defer></script> -->
+
+</body>
+
+</html>
