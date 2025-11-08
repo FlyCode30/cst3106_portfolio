@@ -1,7 +1,7 @@
 { 
     "title": "Mock Manager Dashboard",
     "summarySrc": "",
-    "defaultSrc": "https://1drv.ms/u/c/8d6f6fc8f269edf4/IQSaJcic-zqwTbx8CZgQR2xnASasLdNnXtvoIbsnWEwGQvk",
+    "defaultSrc": "/public/projects/manager_dashboard/assets/img/power_bi_dashboard.pdf",
     "assets": [
         {
             "label": "Source Files",
@@ -13,6 +13,12 @@
             "label": "Documentation",
             "children": [
                 
+            ]
+        },
+        {
+            "label": "Data Files",
+            "children": [
+                {"label": "Main Database (Excel)", "src": "https://1drv.ms/x/c/8d6f6fc8f269edf4/IQS9eQ4OIUccRo0c5Y8I3TjxASexu076b5ViLb8g5rfVeN8", "embed": "iframe"}
             ]
         }
             ]

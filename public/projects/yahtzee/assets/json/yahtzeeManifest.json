@@ -12,7 +12,7 @@
         {
             "label": "Documentation",
             "children": [
-                { "label": "Design Notes(md)", "src": "Projects/common/markdown_reader.html?md=https://raw.githubusercontent.com/FlyCode30/cst3106_portfolio/refs/heads/main/Projects/Yahtzee/assets/docs/design_documentation.md", "embed": "iframe"},
+                { "label": "Design Notes(md)", "src": "projects/common/markdown_reader.html?md=https://raw.githubusercontent.com/FlyCode30/cst3106_portfolio/refs/heads/main/public/projects/yahtzee/assets/docs/design_documentation.md", "embed": "iframe"},
                 { "label": "Rules(PDF)", "src": "Projects/Yahtzee/docs/rules.pdf", "embed": "iframe"}
                 
             ]
